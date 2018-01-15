@@ -48,6 +48,10 @@ function makeRandomRPS(){
     return convertToLetter(getRandomInt(3));
 }
 
+function makeRandomRPSD() {
+    return convertToLetter(getRandomInt(4));
+}
+
 function makeRandomRPSDW() {
     return convertToLetter(getRandomInt(5));
 }
