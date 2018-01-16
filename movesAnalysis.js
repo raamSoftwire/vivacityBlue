@@ -1,5 +1,4 @@
 const fs = require('fs');
+const moveArray = JSON.parse(fs.readFileSync('./moves.json')).moves;
 
-const contents = fs.readFileSync('./moves.json');
-
-console.log(JSON.parse(contents));
+console.log(moveArray);
