@@ -1,17 +1,52 @@
-//peggy 5
-//plays 100 dynamite, then just random moves
-
+//peggy 6
+// plays dynamite after first tie
 
 class Bot {
     makeMove(gamestate) {
         const rounds = gamestate.rounds;
-        if(rounds.length<100){
-            return 'D';
+        const amountOfDynamite = countDynamite(gamestate,'p1');
+        let myNextMove = '';
+        if(rounds.length===0){
+            myNextMove = makeRandomRPSD();
         }
         else {
-            return makeRandomRPS();
+            if(lastMoveWasATie(gamestate) && amountOfDynamite>0){
+                myNextMove = 'D';
+            }
+            else{
+                let previousOpponentMove ='';
+                if(rounds.length===0){
+                    previousOpponentMove = makeRandomRPSD();
+                }
+                else {
+                    previousOpponentMove = rounds[rounds.length - 1]['p2'];
+                }
+
+                let suggestedMove = beatMove(previousOpponentMove);
+
+
+                if(amountOfDynamite>0){
+                    myNextMove = beatMove(suggestedMove);
+                }
+                else{
+                    myNextMove = makeRandomRPS();
+                }
+            }
         }
+        return myNextMove;
     }
+}
+
+function lastMoveWasATie(gamestate){
+    const rounds = gamestate.rounds;
+    let check = false;
+    if(rounds.length===0){
+        check = false;
+    }
+    else if (rounds[rounds.length - 1]['p1'] === rounds[rounds.length - 1]['p2']){
+        check = true;
+    }
+    return check;
 }
 
 function beatMove(move){
